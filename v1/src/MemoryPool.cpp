@@ -155,7 +155,7 @@ void HashBucket::initMemoryPool()
 }   
 
 // 单例模式
-MemoryPool& HashBucket::getMemoryPool(int index)
+MemoryPool& HashBucket::getMemoryPool(size_t index)
 {
     static MemoryPool memoryPool[MEMORY_POOL_NUM];
     return memoryPool[index];

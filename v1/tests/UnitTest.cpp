@@ -59,7 +59,7 @@ void BenchmarkMemoryPool(size_t ntimes, size_t nworks, size_t rounds)
 	{
 		t.join();
 	}
-	printf("%lu个线程并发执行%lu轮次，每轮次newElement&deleteElement %lu次，总计花费：%lu ms\n", nworks, rounds, ntimes, total_costtime);
+	printf("%zu个线程并发执行%zu轮次，每轮次newElement&deleteElement %zu次，总计花费：%zu ms\n", nworks, rounds, ntimes, total_costtime);
 }
 
 void BenchmarkNew(size_t ntimes, size_t nworks, size_t rounds)
@@ -93,7 +93,7 @@ void BenchmarkNew(size_t ntimes, size_t nworks, size_t rounds)
 	{
 		t.join();
 	}
-	printf("%lu个线程并发执行%lu轮次，每轮次malloc&free %lu次，总计花费：%lu ms\n", nworks, rounds, ntimes, total_costtime);
+	printf("%zu个线程并发执行%zu轮次，每轮次malloc&free %zu次，总计花费：%zu ms\n", nworks, rounds, ntimes, total_costtime);
 }
 
 int main()

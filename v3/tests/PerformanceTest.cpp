@@ -130,13 +130,13 @@ public:
     {
         constexpr size_t NUM_THREADS = 4;
         constexpr size_t ALLOCS_PER_THREAD = 25000;
-        constexpr size_t MAX_SIZE = 256;
+        constexpr int MAX_SIZE = 256;
         
         std::cout << "\nTesting multi-threaded allocations (" << NUM_THREADS 
                   << " threads, " << ALLOCS_PER_THREAD << " allocations each):" 
                   << std::endl;
         
-        auto threadFunc = [](bool useMemPool) 
+        auto threadFunc = [ALLOCS_PER_THREAD, MAX_SIZE](bool useMemPool) 
         {
             std::random_device rd;
             std::mt19937 gen(rd());

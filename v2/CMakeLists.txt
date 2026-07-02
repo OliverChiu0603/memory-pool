@@ -5,16 +5,20 @@ project(memory_pool)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-# 编译选项
-add_compile_options(-Wall -O2)
+# 编译选项 (平台条件编译)
+if(MSVC)
+    add_compile_options(/utf-8 /W4)
+else()
+    add_compile_options(-Wall -O2)
+endif()
 
 # 查找pthread库
 find_package(Threads REQUIRED)
 
 # 设置目录
-set(SRC_DIR ${CMAKE_SOURCE_DIR}/src)
-set(INC_DIR ${CMAKE_SOURCE_DIR}/include)
-set(TEST_DIR ${CMAKE_SOURCE_DIR}/tests)
+set(SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(INC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/tests)
 
 # 源文件
 file(GLOB SOURCES "${SRC_DIR}/*.cpp")
@@ -40,11 +44,13 @@ target_link_libraries(perf_test PRIVATE Threads::Threads)
 
 # 添加测试命令
 add_custom_target(test
-    COMMAND ./unit_test
+    COMMAND unit_test
     DEPENDS unit_test
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 add_custom_target(perf
-    COMMAND ./perf_test
+    COMMAND perf_test
     DEPENDS perf_test
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
 )

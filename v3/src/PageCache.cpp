@@ -1,5 +1,9 @@
 #include "PageCache.h"
+#ifdef _WIN32
+#include <windows.h>
+#else
 #include <sys/mman.h>
+#endif
 #include <cstring>
 
 namespace Kama_memoryPool
@@ -127,13 +131,19 @@ void* PageCache::systemAlloc(size_t numPages)
 {
     size_t size = numPages * PAGE_SIZE;
 
-    // 使用mmap分配内存
+#ifdef _WIN32
+    // Windows: 使用VirtualAlloc分配内存（自动清零）
+    void* ptr = VirtualAlloc(nullptr, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+    if (!ptr) return nullptr;
+#else
+    // Linux: 使用mmap分配内存
     void* ptr = mmap(nullptr, size, PROT_READ | PROT_WRITE,
                      MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
     if (ptr == MAP_FAILED) return nullptr;
 
     // 清零内存
     memset(ptr, 0, size);
+#endif
     return ptr;
 }
 

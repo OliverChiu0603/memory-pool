@@ -1,0 +1,8 @@
+# Build directories
+build/
+build_v2/
+build_v3/
+
+# IDE files
+.vs/
+*.user

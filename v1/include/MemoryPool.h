@@ -39,8 +39,8 @@ private:
     bool pushFreeList(Slot* slot);
     Slot* popFreeList();
 private:
-    int                 BlockSize_; // 内存块大小
-    int                 SlotSize_; // 槽大小
+    size_t              BlockSize_; // 内存块大小
+    size_t              SlotSize_; // 槽大小
     Slot*               firstBlock_; // 指向内存池管理的首个实际内存块
     Slot*               curSlot_; // 指向当前未被使用过的槽
     std::atomic<Slot*>  freeList_; // 指向空闲的槽(被使用过后又被释放的槽)
@@ -53,7 +53,7 @@ class HashBucket
 {
 public:
     static void initMemoryPool();
-    static MemoryPool& getMemoryPool(int index);
+    static MemoryPool& getMemoryPool(size_t index);
 
     static void* useMemory(size_t size)
     {

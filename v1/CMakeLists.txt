@@ -18,11 +18,10 @@ file(GLOB TEST_FILES "tests/*.cpp")
 # Add the executable for the main target
 add_executable(${PROJECT_NAME} ${SRC_FILES} ${TEST_FILES})
 
-# Add compile options
-target_compile_options(${PROJECT_NAME} PRIVATE -g -pthread)
-
-# Link libraries
-target_link_libraries(${PROJECT_NAME} pthread)
-
-# Link libraries (if any)
-# target_link_libraries(${PROJECT_NAME} <library_name>)
+# Add compile options (platform-conditional)
+if(MSVC)
+    target_compile_options(${PROJECT_NAME} PRIVATE /utf-8 /W4)
+else()
+    target_compile_options(${PROJECT_NAME} PRIVATE -g -pthread)
+    target_link_libraries(${PROJECT_NAME} pthread)
+endif()
